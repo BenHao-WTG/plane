@@ -1,0 +1,31 @@
+@using Plane.Types.Issues
+
+@* Blazor conversion of IssueLabelsList React component *@
+
+@if (Labels != null && Labels.Any())
+{
+    <div title="@GetLabelsTooltip()" class="h-full flex items-center gap-1 rounded border-[0.5px] border-custom-border-300 px-2 py-1 text-xs text-custom-text-200">
+        <span class="h-2 w-2 flex-shrink-0 rounded-full bg-custom-primary"></span>
+        <span>@Labels.Count</span>
+        <span> Labels</span>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public List<IssueLabel>? Labels { get; set; }
+
+    [Parameter]
+    public int? Length { get; set; }
+
+    [Parameter]
+    public bool ShowLength { get; set; }
+
+    private string GetLabelsTooltip()
+    {
+        if (Labels == null || !Labels.Any())
+            return string.Empty;
+
+        return string.Join(", ", Labels.Select(l => l.Name));
+    }
+}

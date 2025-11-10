@@ -2,8 +2,8 @@
 
 ## Branch Information
 - **Branch Name**: `netcore`
-- **Conversion Date**: November 9, 2025
-- **Status**: Initial conversion structure completed
+- **Conversion Date**: November 9, 2025 (Updated: November 10, 2025)
+- **Status**: Expanded conversion with additional types, components, and services
 
 ## What Has Been Converted
 
@@ -15,18 +15,28 @@ Plane.sln                              # Main solution file
 ├── dotnet/
 │   ├── Plane.Web/                     # Blazor Web Application
 │   │   └── Components/
-│   │       └── Issues/
-│   │           └── ConfirmIssueDiscard.razor  # Converted React component
+│   │       ├── Issues/
+│   │       │   └── ConfirmIssueDiscard.razor  # Converted React component
+│   │       └── UI/
+│   │           └── IssueLabelsList.razor      # Converted UI component
 │   ├── Plane.Types/                   # Type definitions library
-│   │   └── Auth.cs                    # Converted TypeScript types
+│   │   ├── Auth.cs                    # Authentication types
+│   │   ├── User.cs                    # User types
+│   │   ├── DescriptionVersion.cs      # Description version types
+│   │   └── Issues/
+│   │       ├── Base.cs                # Base issue types and enums
+│   │       ├── Issue.cs               # Issue models
+│   │       └── IssueLabel.cs          # Issue label model
 │   └── Plane.Services/                # Service layer
-│       └── AuthService.cs             # Converted API service
+│       ├── AuthService.cs             # Authentication service
+│       └── IssueService.cs            # Issue service
 ```
 
 ### 2. Type Conversions ✅
 
-**Source**: `packages/types/src/auth.ts` (TypeScript)  
-**Target**: `dotnet/Plane.Types/Plane.Types/Auth.cs` (C#)
+**Authentication Types**  
+**Source**: `packages/types/src/auth.ts`  
+**Target**: `dotnet/Plane.Types/Plane.Types/Auth.cs`
 
 Converted types:
 - `TEmailCheckTypes` → `EmailCheckTypes` (enum)
@@ -37,10 +47,60 @@ Converted types:
 - `IPasswordSignInData` → `PasswordSignInData` (class)
 - `ICsrfTokenData` → `CsrfTokenData` (class)
 
+**User Types**  
+**Source**: `packages/types/src/users.ts`  
+**Target**: `dotnet/Plane.Types/Plane.Types/User.cs`
+
+Converted types:
+- `EStartOfTheWeek` → `StartOfTheWeek` (enum)
+- `TLoginMediums` → `LoginMediums` (enum)
+- `IUserTheme` → `UserTheme` (class)
+- `IUserLite` → `UserLite` (class)
+- `IUser` → `User` (class)
+- `IUserAccount` → `UserAccount` (class)
+- `TUserProfile` → `UserProfile` (class)
+- `IInstanceAdminStatus` → `InstanceAdminStatus` (class)
+- `IUserSettings` → `UserSettings` (class)
+- `IUserActivity` → `UserActivity` (class)
+- `UserAuth` → `UserAuth` (class)
+
+**Issue Types**  
+**Source**: `packages/types/src/issues/`  
+**Target**: `dotnet/Plane.Types/Plane.Types/Issues/`
+
+Converted types:
+- `TIssuePriorities` → `IssuePriorities` (enum)
+- `EIssueLayoutTypes` → `IssueLayoutTypes` (enum)
+- `EIssueServiceType` → `IssueServiceType` (enum)
+- `EIssuesStoreType` → `IssuesStoreType` (enum)
+- `TLoader` → `LoaderType` (enum)
+- `TIssueRelationTypes` → `IssueRelationTypes` (enum)
+- `TGroupedIssues` → `GroupedIssues` (class)
+- `TSubGroupedIssues` → `SubGroupedIssues` (class)
+- `TPaginationData` → `PaginationData` (class)
+- `TBaseIssue` → `BaseIssue` (class)
+- `IssueRelation` → `IssueRelation` (class)
+- `TIssueAttachment` → `IssueAttachment` (class)
+- `TIssueLink` → `IssueLink` (class)
+- `TIssueReaction` → `IssueReaction` (class)
+- `TIssue` → `Issue` (class)
+- `TIssueMap` → `IssueMap` (class)
+- `IIssueLabel` → `IssueLabel` (class)
+
+**Description Version Types**  
+**Source**: `packages/types/src/description_version.ts`  
+**Target**: `dotnet/Plane.Types/Plane.Types/DescriptionVersion.cs`
+
+Converted types:
+- `TDescriptionVersion` → `DescriptionVersion` (class)
+- `TDescriptionVersionDetails` → `DescriptionVersionDetails` (class)
+- `TDescriptionVersionsListResponse` → `DescriptionVersionsListResponse` (class)
+
 ### 3. Component Conversions ✅
 
-**Source**: `apps/web/core/components/issues/confirm-issue-discard.tsx` (React/TSX)  
-**Target**: `dotnet/Plane.Web/Plane.Web/Components/Issues/ConfirmIssueDiscard.razor` (Blazor)
+**Issue Confirm Dialog Component**  
+**Source**: `apps/web/core/components/issues/confirm-issue-discard.tsx`  
+**Target**: `dotnet/Plane.Web/Plane.Web/Components/Issues/ConfirmIssueDiscard.razor`
 
 Conversion highlights:
 - React functional component → Blazor Razor component
@@ -49,8 +109,20 @@ Conversion highlights:
 - Event callbacks → `EventCallback` parameters
 - JSX → Razor syntax
 
+**Issue Labels List Component**  
+**Source**: `apps/web/core/components/ui/labels-list.tsx`  
+**Target**: `dotnet/Plane.Web/Plane.Web/Components/UI/IssueLabelsList.razor`
+
+Conversion highlights:
+- React functional component → Blazor component
+- Props destructuring → `[Parameter]` properties
+- Array operations → LINQ methods
+- Tooltip component → title attribute
+- Tailwind CSS classes maintained
+
 ### 4. Service Layer ✅
 
+**Authentication Service**  
 **Target**: `dotnet/Plane.Services/Plane.Services/AuthService.cs`
 
 Converted authentication service methods:
@@ -59,6 +131,24 @@ Converted authentication service methods:
 - `SignInWithPasswordAsync()` - Password sign-in
 - `GetCsrfTokenAsync()` - CSRF token retrieval
 - `SignOutAsync()` - User sign-out
+
+**Issue Service**  
+**Source**: `packages/services/src/issue/sites-issue.service.ts`  
+**Target**: `dotnet/Plane.Services/Plane.Services/IssueService.cs`
+
+Converted issue service methods:
+- `ListAsync()` - Retrieve paginated list of issues
+- `RetrieveAsync()` - Get issue details
+- `ListVotesAsync()` - Get issue votes
+- `AddVoteAsync()` - Create new vote
+- `RemoveVoteAsync()` - Delete vote
+- `ListCommentsAsync()` - Get issue comments
+- `AddCommentAsync()` - Create new comment
+
+Supporting types:
+- `PublicIssuesResponse` - Paginated response model
+- `IssueVote` - Vote model
+- `IssueComment` - Comment model
 
 ### 5. Documentation ✅
 
@@ -112,28 +202,42 @@ All projects compile without errors:
 
 ## Conversion Coverage
 
-- **Types**: ~0.5% converted (1 file out of ~200)
-- **Components**: ~0.05% converted (1 component out of ~2,000)
-- **Services**: ~1% converted (1 service file)
-- **Overall**: <1% of total codebase
+- **Types**: ~2% converted (8 type files out of ~200)
+  - Auth types (1 file)
+  - User types (1 file) 
+  - Issue types (3 files: Base, Issue, IssueLabel)
+  - Description version types (1 file)
+  - Additional models in services (2 files)
+- **Components**: ~0.1% converted (2 components out of ~2,000)
+  - ConfirmIssueDiscard (Issues)
+  - IssueLabelsList (UI)
+- **Services**: ~2% converted (2 service files)
+  - AuthService
+  - IssueService
+- **Overall**: ~1-2% of total codebase
+- **Redundant template files removed**: Counter.razor, Weather.razor
 
 ## What Remains
 
 This is a **partial demonstration** of the conversion approach. A complete conversion would require:
 
 ### Remaining Type Conversions
-- ~199 more TypeScript type/interface files
-- Enums and type unions
+- ~192 more TypeScript type/interface files
+- Workspace, project, module types
+- State, workflow, and cycle types
+- Additional enums and type unions
 - Generic types and utility types
 - Complex nested types
 
 ### Remaining Component Conversions
-- ~1,999+ React components
+- ~1,998+ React components
 - Page components with routing
-- Layout components
+- Layout components (partially cleaned up)
+- Complex form components
+- Data visualization components
+- Integration components
 - Custom hooks conversion to services
 - Context providers to dependency injection
-- Form components with validation
 
 ### Remaining Service Conversions
 - All API service classes
