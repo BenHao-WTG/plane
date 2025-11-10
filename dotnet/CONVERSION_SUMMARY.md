@@ -3,22 +3,43 @@
 ## Branch Information
 - **Branch Name**: `netcore`
 - **Conversion Date**: November 9, 2025 (Updated: November 10, 2025)
-- **Status**: Expanded conversion with additional types, components, and services
+- **Status**: ASP.NET Core MVC application mirroring actual TypeScript app structure
+
+## Conversion Approach
+
+**CORRECTED APPROACH**: This conversion now properly mirrors the actual React Router application from `apps/web` (preview branch) into an ASP.NET Core MVC application, not a generic Blazor learning template.
+
+### Source Application Structure
+The source TypeScript application (`apps/web` from preview branch) is a React Router application with:
+- Dynamic routing with parameters: `[workspaceSlug]`, `[projectId]`, `[issueId]`, etc.
+- Multiple nested route groups
+- Client-side state management with MobX
+- API services with axios
+
+### Target .NET Structure
+The .NET implementation creates an ASP.NET Core MVC application that:
+- Maps React Router routes to MVC controller actions
+- Converts TypeScript API services to Web API controllers
+- Uses the same type definitions (converted to C#)
+- Maintains the same route structure and parameters
 
 ## What Has Been Converted
 
 ### 1. Solution Structure ✅
-A complete .NET 9.0 solution has been created with the following projects:
+A complete .NET 9.0 solution mirroring the actual application structure:
 
 ```
 Plane.sln                              # Main solution file
 ├── dotnet/
-│   ├── Plane.Web/                     # Blazor Web Application
-│   │   └── Components/
-│   │       ├── Issues/
-│   │       │   └── ConfirmIssueDiscard.razor  # Converted React component
-│   │       └── UI/
-│   │           └── IssueLabelsList.razor      # Converted UI component
+│   ├── Plane.Web/                     # ASP.NET Core MVC Application
+│   │   ├── Controllers/
+│   │   │   ├── WorkspaceController.cs     # Workspace routes
+│   │   │   ├── ProjectController.cs       # Project/Issues/Cycles/Modules
+│   │   │   ├── ProfileController.cs       # User profile routes
+│   │   │   └── Api/
+│   │   │       └── IssuesController.cs    # REST API endpoints
+│   │   ├── Program.cs                     # App configuration with routing
+│   │   └── Views/                         # MVC views (to be added)
 │   ├── Plane.Types/                   # Type definitions library
 │   │   ├── Auth.cs                    # Authentication types
 │   │   ├── User.cs                    # User types
@@ -31,6 +52,47 @@ Plane.sln                              # Main solution file
 │       ├── AuthService.cs             # Authentication service
 │       └── IssueService.cs            # Issue service
 ```
+
+### 2. Route Mappings ✅
+
+**From React Router (apps/web) → To ASP.NET Core MVC:**
+
+| React Router Path | MVC Controller | Action | Source File |
+|-------------------|----------------|--------|-------------|
+| `/{workspaceSlug}` | WorkspaceController | Index | `app/(all)/[workspaceSlug]/(projects)/page.tsx` |
+| `/{workspaceSlug}/active-cycles` | WorkspaceController | ActiveCycles | `app/(all)/[workspaceSlug]/(projects)/active-cycles/page.tsx` |
+| `/{workspaceSlug}/analytics/{tabId}` | WorkspaceController | Analytics | `app/(all)/[workspaceSlug]/(projects)/analytics/[tabId]/page.tsx` |
+| `/{workspaceSlug}/browse/{workItem}` | WorkspaceController | Browse | `app/(all)/[workspaceSlug]/(projects)/browse/[workItem]/page.tsx` |
+| `/{workspaceSlug}/drafts` | WorkspaceController | Drafts | `app/(all)/[workspaceSlug]/(projects)/drafts/page.tsx` |
+| `/{workspaceSlug}/notifications` | WorkspaceController | Notifications | `app/(all)/[workspaceSlug]/(projects)/notifications/page.tsx` |
+| `/{workspaceSlug}/projects/{projectId}/issues` | ProjectController | Issues | `app/(all)/[workspaceSlug]/(projects)/projects/(detail)/[projectId]/issues/(list)/page.tsx` |
+| `/{workspaceSlug}/projects/{projectId}/issues/{issueId}` | ProjectController | IssueDetail | `app/(all)/[workspaceSlug]/(projects)/projects/(detail)/[projectId]/issues/(detail)/[issueId]/page.tsx` |
+| `/{workspaceSlug}/projects/{projectId}/cycles` | ProjectController | Cycles | `app/(all)/[workspaceSlug]/(projects)/projects/(detail)/[projectId]/cycles/(list)/page.tsx` |
+| `/{workspaceSlug}/projects/{projectId}/cycles/{cycleId}` | ProjectController | CycleDetail | `app/(all)/[workspaceSlug]/(projects)/projects/(detail)/[projectId]/cycles/(detail)/[cycleId]/page.tsx` |
+| `/{workspaceSlug}/projects/{projectId}/modules` | ProjectController | Modules | `app/(all)/[workspaceSlug]/(projects)/projects/(detail)/[projectId]/modules/(list)/page.tsx` |
+| `/{workspaceSlug}/projects/{projectId}/modules/{moduleId}` | ProjectController | ModuleDetail | `app/(all)/[workspaceSlug]/(projects)/projects/(detail)/[projectId]/modules/(detail)/[moduleId]/page.tsx` |
+| `/{workspaceSlug}/projects/{projectId}/intake` | ProjectController | Intake | `app/(all)/[workspaceSlug]/(projects)/projects/(detail)/[projectId]/intake/page.tsx` |
+| `/{workspaceSlug}/projects/{projectId}/archives/issues` | ProjectController | ArchivedIssues | `app/(all)/[workspaceSlug]/(projects)/projects/(detail)/[projectId]/archives/issues/(list)/page.tsx` |
+| `/{workspaceSlug}/projects/{projectId}/archives/cycles` | ProjectController | ArchivedCycles | `app/(all)/[workspaceSlug]/(projects)/projects/(detail)/[projectId]/archives/cycles/page.tsx` |
+| `/{workspaceSlug}/projects/{projectId}/archives/modules` | ProjectController | ArchivedModules | `app/(all)/[workspaceSlug]/(projects)/projects/(detail)/[projectId]/archives/modules/page.tsx` |
+| `/{workspaceSlug}/profile/{userId}` | ProfileController | Index | `app/(all)/[workspaceSlug]/(projects)/profile/[userId]/page.tsx` |
+| `/{workspaceSlug}/profile/{userId}/activity` | ProfileController | Activity | `app/(all)/[workspaceSlug]/(projects)/profile/[userId]/activity/page.tsx` |
+| `/{workspaceSlug}/profile/{userId}/{profileViewId}` | ProfileController | ProfileView | `app/(all)/[workspaceSlug]/(projects)/profile/[userId]/[profileViewId]/page.tsx` |
+
+### 3. API Endpoints ✅
+
+**REST API Controller (IssuesController):**  
+**Source**: `packages/services/src/issue/sites-issue.service.ts`
+
+| HTTP Method | Endpoint | Action | Description |
+|-------------|----------|--------|-------------|
+| GET | `/api/issues/{workspaceSlug}/{projectId}` | GetIssues | List issues with pagination |
+| GET | `/api/issues/{workspaceSlug}/{projectId}/{issueId}` | GetIssue | Get issue details |
+| GET | `/api/issues/{workspaceSlug}/{projectId}/{issueId}/votes` | GetVotes | Get issue votes |
+| POST | `/api/issues/{workspaceSlug}/{projectId}/{issueId}/votes` | AddVote | Add vote to issue |
+| DELETE | `/api/issues/{workspaceSlug}/{projectId}/{issueId}/votes/{voteId}` | RemoveVote | Remove vote |
+| GET | `/api/issues/{workspaceSlug}/{projectId}/{issueId}/comments` | GetComments | Get issue comments |
+| POST | `/api/issues/{workspaceSlug}/{projectId}/{issueId}/comments` | AddComment | Add comment |
 
 ### 2. Type Conversions ✅
 
