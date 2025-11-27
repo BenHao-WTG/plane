@@ -1,0 +1,151 @@
+@{
+    ViewData["Title"] = "Workspace Dashboard";
+    var workspaceSlug = ViewData["WorkspaceSlug"] as string ?? "";
+}
+
+<div class="workspace-container">
+    <!-- Workspace Header -->
+    <div class="page-header">
+        <h1 class="text-2xl font-semibold" style="color: rgb(var(--color-text-100));">
+            @workspaceSlug Workspace
+        </h1>
+        <p class="text-sm mt-1" style="color: rgb(var(--color-text-200));">
+            Welcome to your workspace dashboard
+        </p>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="content-wrapper mb-6">
+        <h2 class="text-lg font-semibold mb-4" style="color: rgb(var(--color-text-100));">Quick Actions</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <a href="/@workspaceSlug/projects" class="issue-card block">
+                <div class="font-medium" style="color: rgb(var(--color-text-100));">Projects</div>
+                <div class="text-sm mt-1" style="color: rgb(var(--color-text-300));">View and manage projects</div>
+            </a>
+            <a href="/@workspaceSlug/active-cycles" class="issue-card block">
+                <div class="font-medium" style="color: rgb(var(--color-text-100));">Active Cycles</div>
+                <div class="text-sm mt-1" style="color: rgb(var(--color-text-300));">Track ongoing cycles</div>
+            </a>
+            <a href="/@workspaceSlug/analytics/scope-and-demand" class="issue-card block">
+                <div class="font-medium" style="color: rgb(var(--color-text-100));">Analytics</div>
+                <div class="text-sm mt-1" style="color: rgb(var(--color-text-300));">View workspace insights</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="content-wrapper">
+        <h2 class="text-lg font-semibold mb-4" style="color: rgb(var(--color-text-100));">Recent Activity</h2>
+        <div class="space-y-3">
+            <div class="issue-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="font-medium" style="color: rgb(var(--color-text-100));">Sample Issue #123</div>
+                        <div class="text-sm mt-1" style="color: rgb(var(--color-text-300));">Updated 2 hours ago</div>
+                    </div>
+                    <span class="px-3 py-1 text-xs rounded-full" 
+                          style="background-color: rgb(var(--color-background-primary)); color: rgb(var(--color-text-primary));">
+                        In Progress
+                    </span>
+                </div>
+            </div>
+            <div class="issue-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="font-medium" style="color: rgb(var(--color-text-100));">Sample Issue #124</div>
+                        <div class="text-sm mt-1" style="color: rgb(var(--color-text-300));">Updated 5 hours ago</div>
+                    </div>
+                    <span class="px-3 py-1 text-xs rounded-full" 
+                          style="background-color: rgb(var(--color-background-90)); color: rgb(var(--color-text-200));">
+                        Todo
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="mt-6 flex gap-4">
+        <a href="/@workspaceSlug/drafts" class="btn-secondary">View Drafts</a>
+        <a href="/@workspaceSlug/notifications" class="btn-secondary">Notifications</a>
+        <a href="/@workspaceSlug/browse/issues" class="btn-secondary">Browse Issues</a>
+    </div>
+</div>
+
+<style>
+    /* Tailwind-like utilities for this view */
+    .grid {
+        display: grid;
+    }
+    .grid-cols-1 {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    @@media (min-width: 768px) {
+        .md\:grid-cols-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+    .gap-4 {
+        gap: 1rem;
+    }
+    .space-y-3 > * + * {
+        margin-top: 0.75rem;
+    }
+    .mb-4 {
+        margin-bottom: 1rem;
+    }
+    .mb-6 {
+        margin-bottom: 1.5rem;
+    }
+    .mt-1 {
+        margin-top: 0.25rem;
+    }
+    .mt-6 {
+        margin-top: 1.5rem;
+    }
+    .flex {
+        display: flex;
+    }
+    .items-center {
+        align-items: center;
+    }
+    .justify-between {
+        justify-content: space-between;
+    }
+    .block {
+        display: block;
+    }
+    .text-2xl {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+    .text-lg {
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+    }
+    .text-sm {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+    .text-xs {
+        font-size: 0.75rem;
+        line-height: 1rem;
+    }
+    .font-semibold {
+        font-weight: 600;
+    }
+    .font-medium {
+        font-weight: 500;
+    }
+    .px-3 {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    .py-1 {
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+    }
+    .rounded-full {
+        border-radius: 9999px;
+    }
+</style>

@@ -1,0 +1,195 @@
+@{
+    ViewData["Title"] = "Issues";
+    var workspaceSlug = ViewData["WorkspaceSlug"] as string ?? "";
+    var projectId = ViewData["ProjectId"] as string ?? "";
+}
+
+<div class="workspace-container">
+    <!-- Project Header -->
+    <div class="page-header">
+        <div class="flex items-center justify-between">
+            <div>
+                <nav class="text-sm mb-2" style="color: rgb(var(--color-text-300));">
+                    <a href="/@workspaceSlug" style="color: rgb(var(--color-text-300));">@workspaceSlug</a>
+                    <span class="mx-2">/</span>
+                    <span style="color: rgb(var(--color-text-200));">Project @projectId</span>
+                </nav>
+                <h1 class="text-2xl font-semibold" style="color: rgb(var(--color-text-100));">
+                    Issues
+                </h1>
+            </div>
+            <button class="btn-primary">
+                New Issue
+            </button>
+        </div>
+    </div>
+
+    <!-- Filters and Views -->
+    <div class="mb-6 flex gap-4 items-center">
+        <div class="flex gap-2">
+            <button class="btn-secondary text-sm">All Issues</button>
+            <button class="btn-secondary text-sm">My Issues</button>
+            <button class="btn-secondary text-sm">Assigned</button>
+        </div>
+        <div class="flex-1"></div>
+        <select class="form-control" style="width: auto;">
+            <option>List View</option>
+            <option>Board View</option>
+            <option>Calendar View</option>
+        </select>
+    </div>
+
+    <!-- Issues List -->
+    <div class="content-wrapper">
+        <div class="space-y-3">
+            <!-- Issue Item 1 -->
+            <div class="issue-card">
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded flex items-center justify-center" 
+                         style="background-color: rgb(var(--color-background-primary)); color: rgb(var(--color-text-primary));">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <circle cx="8" cy="8" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-sm font-medium" style="color: rgb(var(--color-text-300));">ISSUE-123</span>
+                            <h3 class="font-medium" style="color: rgb(var(--color-text-100));">
+                                Implement user authentication system
+                            </h3>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm" style="color: rgb(var(--color-text-300));">
+                            <span class="flex items-center gap-1">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor">
+                                    <circle cx="7" cy="7" r="5" stroke-width="1.5"/>
+                                </svg>
+                                In Progress
+                            </span>
+                            <span>•</span>
+                            <span>High Priority</span>
+                            <span>•</span>
+                            <span>Updated 2 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center" 
+                             style="background-color: rgb(var(--color-background-primary)); color: rgb(var(--color-text-primary));">
+                            JD
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Issue Item 2 -->
+            <div class="issue-card">
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded flex items-center justify-center" 
+                         style="background-color: rgb(var(--color-background-90)); color: rgb(var(--color-text-200));">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <circle cx="8" cy="8" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-sm font-medium" style="color: rgb(var(--color-text-300));">ISSUE-124</span>
+                            <h3 class="font-medium" style="color: rgb(var(--color-text-100));">
+                                Fix responsive layout on mobile devices
+                            </h3>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm" style="color: rgb(var(--color-text-300));">
+                            <span class="flex items-center gap-1">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor">
+                                    <circle cx="7" cy="7" r="5" stroke-width="1.5"/>
+                                </svg>
+                                Todo
+                            </span>
+                            <span>•</span>
+                            <span>Medium Priority</span>
+                            <span>•</span>
+                            <span>Created yesterday</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center" 
+                             style="background-color: rgb(var(--color-primary-100)); color: white;">
+                            AS
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Issue Item 3 -->
+            <div class="issue-card">
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded flex items-center justify-center" 
+                         style="background-color: rgb(var(--color-background-primary)); color: rgb(var(--color-text-primary));">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M7 10.5 L5 8.5 L5.7 7.8 L7 9.1 L10.3 5.8 L11 6.5 Z"/>
+                            <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-sm font-medium" style="color: rgb(var(--color-text-300));">ISSUE-125</span>
+                            <h3 class="font-medium" style="color: rgb(var(--color-text-100));">
+                                Update documentation for API endpoints
+                            </h3>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm" style="color: rgb(var(--color-text-300));">
+                            <span class="flex items-center gap-1">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor">
+                                    <circle cx="7" cy="7" r="5" stroke-width="1.5"/>
+                                    <path d="M5 7 L6.5 8.5 L9 6" stroke-width="1.5" fill="none"/>
+                                </svg>
+                                Done
+                            </span>
+                            <span>•</span>
+                            <span>Low Priority</span>
+                            <span>•</span>
+                            <span>Completed 3 days ago</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center" 
+                             style="background-color: rgb(var(--color-background-90)); color: rgb(var(--color-text-200));">
+                            MK
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-6 flex items-center justify-between">
+        <div class="text-sm" style="color: rgb(var(--color-text-300));">
+            Showing 3 of 3 issues
+        </div>
+        <div class="flex gap-2">
+            <button class="btn-secondary text-sm" disabled>Previous</button>
+            <button class="btn-secondary text-sm" disabled>Next</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Additional utilities */
+    .w-8 { width: 2rem; }
+    .h-8 { height: 2rem; }
+    .rounded { border-radius: 0.375rem; }
+    .rounded-full { border-radius: 9999px; }
+    .flex-shrink-0 { flex-shrink: 0; }
+    .flex-1 { flex: 1 1 0%; }
+    .gap-1 { gap: 0.25rem; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-3 { gap: 0.75rem; }
+    .gap-4 { gap: 1rem; }
+    .mx-2 { margin-left: 0.5rem; margin-right: 0.5rem; }
+    select.form-control {
+        padding-right: 2rem;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.5rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5rem 1.5rem;
+    }
+</style>

@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Plane</title>
+    
+    <!-- Plane Global Styles from apps/web/styles -->
+    <link rel="stylesheet" href="~/css/globals.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/emoji.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/power-k.css" asp-append-version="true" />
+    
+    <!-- Additional site styles -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="bg-custom-background-100">
+    <div class="flex h-screen">
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-auto">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
